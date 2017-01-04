@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'postgres_ext/active_record/cte_proxy'
 
 module ActiveRecord

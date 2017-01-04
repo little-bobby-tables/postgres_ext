@@ -1,14 +1,14 @@
 module PostgresExt::WhereChainExtensions
   def overlap(opts, *rest)
-    substitute_comparisons(opts, rest, Arel::Nodes::Overlap, 'overlap')
+    substitute_comparisons(opts, rest, Arel::Nodes::Overlap, :overlap)
   end
 
   def contained_within(opts, *rest)
-    substitute_comparisons(opts, rest, Arel::Nodes::ContainedWithin, 'contained_within')
+    substitute_comparisons(opts, rest, Arel::Nodes::ContainedWithin, :contained_within)
   end
 
   def contained_within_or_equals(opts, *rest)
-    substitute_comparisons(opts, rest, Arel::Nodes::ContainedWithinEquals, 'contained_within_or_equals')
+    substitute_comparisons(opts, rest, Arel::Nodes::ContainedWithinEquals, :contained_within_or_equals)
   end
 
   def contains(opts, *rest)
@@ -52,7 +52,7 @@ module PostgresExt::WhereChainExtensions
   end
 
   def contains_or_equals(opts, *rest)
-    substitute_comparisons(opts, rest, Arel::Nodes::ContainsEquals, 'contains_or_equals')
+    substitute_comparisons(opts, rest, Arel::Nodes::ContainsEquals, :contains_or_equals)
   end
 
   def any(opts, *rest)
