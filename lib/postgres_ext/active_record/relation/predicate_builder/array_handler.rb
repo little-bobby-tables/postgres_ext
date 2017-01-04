@@ -1,13 +1,14 @@
 module PostgresExt::ArrayHandlerExtension
   def call(attribute, value)
-    column = case attribute.try(:relation)
-               when Arel::Nodes::TableAlias, NilClass
-               else
-                 cache = ActiveRecord::Base.connection.schema_cache
-                 if cache.data_source_exists? attribute.relation.name
-                   cache.columns(attribute.relation.name).detect{ |col| col.name.to_s == attribute.name.to_s }
-                 end
-             end
+    table = attribute.try(:relation)
+    table = table.left if table.is_a? Arel::Nodes::TableAlias
+    return super if table.nil?
+
+    cache = ActiveRecord::Base.connection.schema_cache
+    column = if cache.data_source_exists?(table.name)
+      cache.columns(table.name).detect { |col| col.name.to_s == attribute.name.to_s }
+    end
+
     if column && column.respond_to?(:array) && column.array
       attribute.eq(value)
     else
